@@ -1,3 +1,9 @@
+import { LoginForm } from "@/components/auth/login-form";
+
 export default function Home() {
-  return <div>Welcome</div>;
+  return (
+    <div>
+      <LoginForm />
+    </div>
+  );
 }
