@@ -24,6 +24,7 @@ import {
 
 export function SignupForm() {
   const handleSubmit = (data: z.infer<typeof signupSchema>) => {
+    alert(JSON.stringify(data));
     console.log(JSON.stringify(data));
   };
   const form = useForm<z.infer<typeof signupSchema>>({
