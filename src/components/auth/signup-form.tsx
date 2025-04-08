@@ -1,132 +1,155 @@
 "use client";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema } from "@/schema/signup-schema";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import { z, ZodType } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+} from "../ui/card";
 
-type FormData = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
-
-export function SignupForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const schema: ZodType<FormData> = z
-    .object({
-      name: z
-        .string()
-        .min(2, { message: "Name must be at least 2 characters" }),
-      email: z.string().email(),
-      password: z
-        .string()
-        .min(4, { message: "Password must be at least 4 characters" })
-        .max(32),
-      confirmPassword: z.string().min(4).max(32),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-  });
-  const submitData: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    console.log("Submitted");
+export function SignupForm() {
+  const handleSubmit = (data: z.infer<typeof signupSchema>) => {
+    console.log(JSON.stringify(data));
   };
+  const form = useForm<z.infer<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div>
       <Card>
-        <CardHeader>
-          <CardTitle>Signup</CardTitle>
-          <CardDescription>Create an account</CardDescription>
+        <CardHeader className="text-center">
+          <CardTitle className="text-xl">Sign Up</CardTitle>
+          <CardDescription>
+            Enter your email below to create your account
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit(submitData)}>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-3">
-                <Label htmlFor="Name">Name</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  {...register("name")}
-                  placeholder="John due"
-                  required
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="max-w-md w-full flex flex-col gap-4"
+            >
+              <div className="grid grid-cols-2 gap-3">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>First Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="John" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
-                {errors.name && (
-                  <p className="text-destructive text-sm">
-                    {errors.name.message}
-                  </p>
-                )}
-              </div>
-              <div className="grid gap-3">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  {...register("email")}
-                  placeholder="m@example.com"
-                  required
-                />
-              </div>
-              <div className="grid gap-3">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  {...register("password")}
-                  required
-                />
-              </div>
-              <div className="grid gap-3">
-                <div className="flex items-center">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                </div>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  {...register("confirmPassword")}
-                  required
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => {
+                    return (
+                      <FormItem>
+                        <FormLabel>Last Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Doe" type="text" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    );
+                  }}
                 />
               </div>
-              <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="m@example.com"
+                          type="email"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="********"
+                          type="password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel>Confirm Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="********"
+                          type="password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+              <Button className="w-full" type="submit">
+                Sign Up
+              </Button>
+              <p className="text-center text-sm">
+                Already have an account?{" "}
+                <Link
+                  href="/auth/login"
+                  className="underline underline-offset-4"
+                >
                   Login
-                </Button>
-                <Button variant="outline" className="w-full">
-                  Sign up with Google
-                </Button>
-              </div>
-            </div>
-            <div className="mt-4 text-center text-sm">
-              Already have an account?{" "}
-              <Link href="/auth/login" className="underline underline-offset-4">
-                Login
-              </Link>
-            </div>
-          </form>
+                </Link>
+              </p>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>
