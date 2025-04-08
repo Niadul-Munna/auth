@@ -24,7 +24,7 @@ import {
 
 export function LoginForm() {
   const handleSubmit = (data: z.infer<typeof loginSchema>) => {
-    alert("Login successful");
+    alert(JSON.stringify(data));
     console.log(JSON.stringify(data));
   };
   const form = useForm<z.infer<typeof loginSchema>>({
