@@ -33,65 +33,29 @@ export function SignupForm() {
     },
   });
   return (
-    <div>
-      <Card>
-        <CardHeader className="text-center">
-          <CardTitle className="text-xl">Sign Up</CardTitle>
-          <CardDescription>
-            Enter your email below to create your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleSubmit)}
-              className="max-w-md w-full flex flex-col gap-4"
-            >
-              <div className="grid grid-cols-2 gap-3">
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field }) => {
-                    return (
-                      <FormItem>
-                        <FormLabel>First Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="John" type="text" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    );
-                  }}
-                />
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => {
-                    return (
-                      <FormItem>
-                        <FormLabel>Last Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Doe" type="text" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    );
-                  }}
-                />
-              </div>
+    <Card className="max-w-sm">
+      <CardHeader className="text-center">
+        <CardTitle className="text-xl">Sign Up</CardTitle>
+        <CardDescription>
+          Enter your email below to create your account
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="max-w-sm w-full flex flex-col gap-4"
+          >
+            <div className="grid grid-cols-2 gap-3">
               <FormField
                 control={form.control}
-                name="email"
+                name="firstName"
                 render={({ field }) => {
                   return (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>First Name</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="m@example.com"
-                          type="email"
-                          {...field}
-                        />
+                        <Input placeholder="John" type="text" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -100,58 +64,89 @@ export function SignupForm() {
               />
               <FormField
                 control={form.control}
-                name="password"
+                name="lastName"
                 render={({ field }) => {
                   return (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Last Name</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="********"
-                          type="password"
-                          {...field}
-                        />
+                        <Input placeholder="Doe" type="text" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   );
                 }}
               />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormLabel>Confirm Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="********"
-                          type="password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
-              />
-              <Button className="w-full" type="submit">
-                Sign Up
-              </Button>
-              <p className="text-center text-sm">
-                Already have an account?{" "}
-                <Link
-                  href="/auth/login"
-                  className="underline underline-offset-4"
-                >
-                  Login
-                </Link>
-              </p>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-    </div>
+            </div>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="m@example.com"
+                        type="email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="********"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>Confirm Password</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="********"
+                        type="password"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+            <Button className="w-full" type="submit">
+              Sign Up
+            </Button>
+            <p className="text-center text-sm">
+              Already have an account?{" "}
+              <Link href="/auth/login" className="underline underline-offset-4">
+                Login
+              </Link>
+            </p>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }
