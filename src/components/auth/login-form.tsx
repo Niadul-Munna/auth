@@ -21,16 +21,16 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-
 export function LoginForm() {
-  const handleSubmit = (data: z.infer<typeof loginSchema>) => {
-    alert(JSON.stringify(data));
-    console.log(JSON.stringify(data));
+  const handleSubmit = () => {
+    alert(JSON.stringify(form.watch(), null, 2));
+    console.log(JSON.stringify(form.watch(), null, 2));
   };
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      userName: "",
       password: "",
     },
   });
@@ -50,17 +50,13 @@ export function LoginForm() {
           >
             <FormField
               control={form.control}
-              name="email"
+              name="userName"
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>User Name</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="m@example.com"
-                        type="email"
-                        {...field}
-                      />
+                      <Input placeholder="John Doe" type="text" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,6 +85,7 @@ export function LoginForm() {
             <Button className="w-full" type="submit">
               Login
             </Button>
+
             <p className="text-center text-sm">
               Don&apos;t have an account?{" "}
               <Link
