@@ -23,9 +23,9 @@ import {
 } from "../ui/card";
 
 export function SignupForm() {
-  const handleSubmit = (data: z.infer<typeof signupSchema>) => {
-    alert(JSON.stringify(data));
-    console.log(JSON.stringify(data));
+  const handleSubmit = () => {
+    alert(JSON.stringify(form.watch(), null, 2));
+    console.log(JSON.stringify(form.watch(), null, 2));
   };
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
